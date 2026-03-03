@@ -154,6 +154,23 @@ button:hover {
   font-weight: 600;
 }
 
+.species-status {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.species-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0 0 1px #bcc9bc;
+}
+
 .legend {
   margin-top: 10px;
   border: 1px solid var(--line);

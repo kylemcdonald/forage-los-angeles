@@ -8,6 +8,7 @@ const state = {
   mode: 'search',
   speciesQuery: '',
   browseSpeciesId: '',
+  singleSelectedSpeciesId: null,
   inSeasonOnly: false,
   data: null,
   filteredPoints: [],
@@ -26,6 +27,7 @@ const el = {
   clearSpecies: document.getElementById('clearSpecies'),
   inSeasonOnly: document.getElementById('inSeasonOnly'),
   stats: document.getElementById('stats'),
+  speciesStatus: document.getElementById('speciesStatus'),
   enableSensors: document.getElementById('enableSensors'),
   compassInfo: document.getElementById('compassInfo'),
   arrow: document.getElementById('arrow'),
@@ -98,6 +100,7 @@ function isSpeciesInSeason(species) {
 }
 
 function toGeoJSON(points) {
+  const singleSelected = state.singleSelectedSpeciesId !== null;
   return {
     type: 'FeatureCollection',
     features: points.map((p) => {
@@ -115,7 +118,7 @@ function toGeoJSON(points) {
           species: species.name,
           stageLabel,
           probability: Number(probability.toFixed(2)),
-          color: colorForStageCode(stageCode),
+          color: singleSelected ? '#111111' : colorForStageCode(stageCode),
           radius: 4,
         },
       };
@@ -166,6 +169,21 @@ function renderSuggestions() {
 function renderStats() {
   const shown = state.filteredPoints.length;
   el.stats.textContent = `${shown.toLocaleString()} results`;
+}
+
+function renderSpeciesStatus() {
+  if (state.singleSelectedSpeciesId === null) {
+    el.speciesStatus.style.display = 'none';
+    el.speciesStatus.textContent = '';
+    return;
+  }
+
+  const species = getSpeciesById(state.singleSelectedSpeciesId);
+  const stageCode = getCurrentRipenessStageCode(species);
+  const label = stageLabelFromCode(stageCode);
+  const color = colorForStageCode(stageCode);
+  el.speciesStatus.style.display = 'flex';
+  el.speciesStatus.innerHTML = `<span class="species-status-dot" style="background:${color}"></span>${species.name}: ${label}`;
 }
 
 function renderModeUI() {
@@ -316,6 +334,9 @@ function applyFilters() {
   } else if (state.browseSpeciesId !== '') {
     matchingIds = new Set([Number(state.browseSpeciesId)]);
   }
+  state.singleSelectedSpeciesId = matchingIds && matchingIds.size === 1
+    ? Array.from(matchingIds)[0]
+    : null;
 
   state.filteredPoints = state.data.points.filter((point) => {
     const sid = point[2];
@@ -326,6 +347,7 @@ function applyFilters() {
   });
 
   renderStats();
+  renderSpeciesStatus();
   renderMapData();
   updateCompassTarget();
   updateMapGuidance();
