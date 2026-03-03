@@ -1,4 +1,5 @@
-const DATA_URL = new URL('../data/forage_trees.json', window.location.href).toString();
+const PROJECT_BASE = window.location.pathname.replace(/\/(?:app\/)?$/, '/');
+const DATA_URL = `${PROJECT_BASE}data/forage_trees.json`;
 const NOW = new Date();
 const CURRENT_MONTH = NOW.getMonth() + 1;
 
