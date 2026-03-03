@@ -118,7 +118,7 @@ function toGeoJSON(points) {
           species: species.name,
           stageLabel,
           probability: Number(probability.toFixed(2)),
-          color: singleSelected ? '#111111' : colorForStageCode(stageCode),
+          color: singleSelected ? '#1565ff' : colorForStageCode(stageCode),
           radius: 4,
         },
       };
