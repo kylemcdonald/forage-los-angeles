@@ -1,0 +1,51 @@
+Rank,Species,Count,SeasonStartMonth,SeasonEndMonth,CurrentMonth,CurrentStage
+1,olive (Olea europaea),9026,9,11,3,out
+2,edible loquat (Eriobotrya japonica),5268,3,5,3,beginning
+3,white mulberry (Morus alba),5260,4,6,3,out
+4,cherry plum (Prunus cerasifera),4745,5,7,3,out
+5,southern California black walnut (Juglans californica),4675,9,10,3,out
+6,carob (Ceratonia siliqua),4557,8,10,3,out
+7,citrus (Citrus spp.),2902,11,4,3,end
+8,avocado (Persea americana),2446,10,5,3,end
+9,guava (Psidium guajava),2014,8,11,3,out
+10,orange (Citrus sinensis),1775,12,4,3,end
+11,Manila tamarind; guamuchil (Pithecellobium dulce),1645,7,10,3,out
+12,peach (Prunus persica),1613,5,8,3,out
+13,edible fig (Ficus carica),1352,6,9,3,out
+14,lemon (Citrus limon),1328,11,4,3,end
+15,black walnut (Juglans nigra),1120,9,10,3,out
+16,pomegranate (Punica granatum),1045,9,11,3,out
+17,bay laurel (Umbellularia californica),993,1,12,3,beginning
+18,date palm (Phoenix dactylifera),799,8,11,3,out
+19,apple (Malus domestica),661,8,10,3,out
+20,white sapote (Casimiroa edulis),528,11,3,3,end
+21,pecan (Carya illinoinensis),497,9,11,3,out
+22,grapefruit (Citrus paradisi),398,12,4,3,end
+23,cherimoya (Annona cherimola),385,11,3,3,end
+24,apricot (Prunus armeniaca),365,5,6,3,out
+25,Japanese edible plum (Prunus salicina),248,6,8,3,out
+26,fig species (Ficus spp.),223,6,9,3,out
+27,pineapple guava; feijoa (Acca sellowiana),222,10,12,3,out
+28,pindo palm; jelly palm (Butia odorata),207,7,10,3,out
+29,English walnut (Juglans regia),206,9,10,3,out
+30,edible pear (Pyrus communis),199,8,10,3,out
+31,Mexican lime (Citrus x aurantiifolia),198,7,10,3,out
+32,papaya (Carica papaya),177,1,12,3,beginning
+33,European edible plum (Prunus domestica),168,6,8,3,out
+34,paper mulberry (Broussonetia papyrifera),148,4,6,3,out
+35,ice cream bean tree (Inga edulis),132,1,12,3,beginning
+36,Japanese persimmon (Diospyros kaki),130,10,12,3,out
+37,sweet cherry (Prunus avium),130,5,6,3,out
+38,mango (Mangifera indica),122,7,9,3,out
+39,Mandarin orange (Citrus reticulata),117,11,3,3,end
+40,northern California black walnut (Juglans hindsii),110,9,10,3,out
+41,strawberry guava (Psidium cattleyanum),105,9,12,3,out
+42,Black cherry (Prunus serotina),101,7,8,3,out
+43,Chinese jujube (Ziziphus jujuba),94,8,10,3,out
+44,Java plum (Syzygium cumini),93,6,8,3,out
+45,red mulberry (Morus rubra),90,4,6,3,out
+46,kumquat (Citrus japonica),80,12,3,3,end
+47,nectarine (Prunus persica var. nucipersica),74,6,8,3,out
+48,almond (Prunus dulcis),64,8,9,3,out
+49,black mulberry (Morus nigra),53,4,6,3,out
+50,capulin cherry (Prunus salicifolia),43,6,7,3,out

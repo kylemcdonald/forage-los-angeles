@@ -1,0 +1,90 @@
+Species,RowsInRaw,RowsSourceEdibleTrue,RowsFinalIncluded,SourceEdibleFraction,FinalIncludedFraction,SeasonStartMonth,SeasonEndMonth
+olive (Olea europaea),9026,9026,9026,1.000000,1.000000,9,11
+edible loquat (Eriobotrya japonica),5268,5268,5268,1.000000,1.000000,3,5
+white mulberry (Morus alba),5260,0,5260,0.000000,1.000000,4,6
+cherry plum (Prunus cerasifera),4747,4747,4745,1.000000,0.999579,5,7
+southern California black walnut (Juglans californica),4675,0,4675,0.000000,1.000000,9,10
+carob (Ceratonia siliqua),4557,4557,4557,1.000000,1.000000,8,10
+citrus (Citrus spp.),2902,2902,2902,1.000000,1.000000,11,4
+avocado (Persea americana),2446,2446,2446,1.000000,1.000000,10,5
+guava (Psidium guajava),2014,2014,2014,1.000000,1.000000,8,11
+orange (Citrus sinensis),1775,1775,1775,1.000000,1.000000,12,4
+Manila tamarind; guamuchil (Pithecellobium dulce),1645,1645,1645,1.000000,1.000000,7,10
+peach (Prunus persica),1613,1613,1613,1.000000,1.000000,5,8
+edible fig (Ficus carica),1352,1352,1352,1.000000,1.000000,6,9
+lemon (Citrus limon),1328,1328,1328,1.000000,1.000000,11,4
+black walnut (Juglans nigra),1120,1120,1120,1.000000,1.000000,9,10
+pomegranate (Punica granatum),1045,1045,1045,1.000000,1.000000,9,11
+bay laurel (Umbellularia californica),993,993,993,1.000000,1.000000,1,12
+date palm (Phoenix dactylifera),799,799,799,1.000000,1.000000,8,11
+apple (Malus domestica),661,661,661,1.000000,1.000000,8,10
+white sapote (Casimiroa edulis),528,528,528,1.000000,1.000000,11,3
+pecan (Carya illinoinensis),497,497,497,1.000000,1.000000,9,11
+grapefruit (Citrus paradisi),398,398,398,1.000000,1.000000,12,4
+cherimoya (Annona cherimola),385,385,385,1.000000,1.000000,11,3
+apricot (Prunus armeniaca),365,365,365,1.000000,1.000000,5,6
+Japanese edible plum (Prunus salicina),248,248,248,1.000000,1.000000,6,8
+fig species (Ficus spp.),223,223,223,1.000000,1.000000,6,9
+pineapple guava; feijoa (Acca sellowiana),222,222,222,1.000000,1.000000,10,12
+pindo palm; jelly palm (Butia odorata),207,207,207,1.000000,1.000000,7,10
+English walnut (Juglans regia),206,0,206,0.000000,1.000000,9,10
+edible pear (Pyrus communis),199,199,199,1.000000,1.000000,8,10
+Mexican lime (Citrus x aurantiifolia),198,198,198,1.000000,1.000000,7,10
+papaya (Carica papaya),177,177,177,1.000000,1.000000,1,12
+European edible plum (Prunus domestica),168,168,168,1.000000,1.000000,6,8
+paper mulberry (Broussonetia papyrifera),148,0,148,0.000000,1.000000,4,6
+ice cream bean tree (Inga edulis),132,132,132,1.000000,1.000000,1,12
+Japanese persimmon (Diospyros kaki),130,130,130,1.000000,1.000000,10,12
+sweet cherry (Prunus avium),130,130,130,1.000000,1.000000,5,6
+mango (Mangifera indica),122,122,122,1.000000,1.000000,7,9
+Mandarin orange (Citrus reticulata),117,117,117,1.000000,1.000000,11,3
+northern California black walnut (Juglans hindsii),110,0,110,0.000000,1.000000,9,10
+strawberry guava (Psidium cattleyanum),105,105,105,1.000000,1.000000,9,12
+Black cherry (Prunus serotina),101,101,101,1.000000,1.000000,7,8
+Chinese jujube (Ziziphus jujuba),94,94,94,1.000000,1.000000,8,10
+Java plum (Syzygium cumini),93,0,93,0.000000,1.000000,6,8
+red mulberry (Morus rubra),90,0,90,0.000000,1.000000,4,6
+kumquat (Citrus japonica),80,80,80,1.000000,1.000000,12,3
+nectarine (Prunus persica var. nucipersica),74,74,74,1.000000,1.000000,6,8
+almond (Prunus dulcis),64,64,64,1.000000,1.000000,8,9
+black mulberry (Morus nigra),53,53,53,1.000000,1.000000,4,6
+capulin cherry (Prunus salicifolia),43,43,43,1.000000,1.000000,6,7
+Bearss lime (Citrus latifolia),36,36,36,1.000000,1.000000,7,10
+tamarind (Tamarindus indica),33,33,33,1.000000,1.000000,12,4
+crabapple (Malus hybrids and cvs - crabapple),28,28,28,1.000000,1.000000,8,10
+rose apple (Syzygium jambos),27,27,27,1.000000,1.000000,6,8
+American persimmon (Diospyros virginiana),23,23,23,1.000000,1.000000,9,11
+kaffir lime; makrut lime; Thai lime (Citrus hystrix),21,21,21,1.000000,1.000000,10,2
+bitter orange (Citrus x aurantium),19,19,19,1.000000,1.000000,12,3
+European crabapple (Malus sylvestris),18,18,18,1.000000,1.000000,1,12
+Asian pear (Pyrus pyrifolia),16,0,16,0.000000,1.000000,8,10
+Longon (Dimocarpus longon),14,14,14,1.000000,1.000000,7,9
+edible pistachio (Pistacia vera),14,14,14,1.000000,1.000000,9,10
+tangelo (Citrus x tangelo),13,13,13,1.000000,1.000000,12,3
+quince (Cydonia oblonga),13,13,13,1.000000,1.000000,9,11
+Surinam cherry (Eugenia uniflora),12,0,12,0.000000,1.000000,4,6
+pomelo (Citrus maxima),11,11,11,1.000000,1.000000,11,2
+jackfruit (Artocarpus heterophyllus),10,10,10,1.000000,1.000000,7,9
+calamansi; calamondin (x Citrofortunella microcarpa),6,6,6,1.000000,1.000000,11,4
+banana (Musa x paradisiaca),6,6,6,1.000000,1.000000,1,12
+Pakistan mulberry (Morus macroura),5,0,5,0.000000,1.000000,4,6
+Korean mulberry (Morus indica),5,0,5,0.000000,1.000000,4,6
+sapodilla (Manilkara zapota),5,5,5,1.000000,1.000000,5,9
+soursop (Annona muricata),4,4,4,1.000000,1.000000,7,10
+Meyer lemon (Citrus x meyeri),4,4,4,1.000000,1.000000,11,3
+Japanese flowering apricot (Prunus mume),4,4,4,1.000000,1.000000,1,12
+European grape (Vitis vinifera),4,4,4,1.000000,1.000000,8,10
+lychee (Litchi chinensis),3,3,3,1.000000,1.000000,6,7
+Bechtel crabapple (Malus coronaria ssp. ioensis),3,3,3,1.000000,1.000000,1,12
+lemon guava (Psidium cattleianum ssp lucidum),3,3,3,1.000000,1.000000,9,12
+Jamaican cherry tree (Muntingia calabura),2,2,2,1.000000,1.000000,1,12
+ice cream bean tree; pacay (Inga feuillei),2,2,2,1.000000,1.000000,1,12
+chestnut species (Castanea spp.),1,1,1,1.000000,1.000000,1,12
+mamey; mamey sapote (Pouteria sapota),1,1,1,1.000000,1.000000,5,8
+black sapote (Diospyros nigra),1,1,1,1.000000,1.000000,11,2
+achiote; lipstick tree (Bixa orellana),1,1,1,1.000000,1.000000,1,12
+allspice (Pimenta dioica),1,1,1,1.000000,1.000000,1,12
+star fruit (Averrhoa carambola),1,1,1,1.000000,1.000000,1,12
+Colossal chestnut (Castanea 'Colossal'),1,1,1,1.000000,1.000000,1,12
+pear lemon (Citrus x lumia),1,1,1,1.000000,1.000000,1,12
+European filbert (Corylus avellana),1,1,1,1.000000,1.000000,1,12

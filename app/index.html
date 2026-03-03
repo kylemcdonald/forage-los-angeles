@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>LA Forage Trees</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="controls">
+        <h1>LA Forage Trees</h1>
+        <p class="sub">Edible tree inventory with live species filtering and seasonality.</p>
+
+        <label for="speciesInput">Species search</label>
+        <div class="autocomplete-wrap">
+          <input id="speciesInput" type="text" placeholder="Type species name..." autocomplete="off" />
+          <div id="suggestions" class="suggestions"></div>
+        </div>
+
+        <div class="toggle-row">
+          <label class="toggle">
+            <input id="inSeasonOnly" type="checkbox" />
+            <span>In season only</span>
+          </label>
+          <button id="clearSpecies" type="button">Clear</button>
+          <div id="stats" class="stats"></div>
+        </div>
+      </header>
+
+      <main>
+        <section class="map-card">
+          <div id="map"></div>
+        </section>
+
+        <section class="compass-card">
+          <div class="compass-head">
+            <h2>Nearest Tree Compass</h2>
+            <button id="enableSensors" type="button">Enable Compass + GPS</button>
+          </div>
+          <div class="compass-body">
+            <div class="dial">
+              <div id="arrow" class="arrow"></div>
+            </div>
+            <div id="compassInfo" class="compass-info">Enable sensors to start guidance.</div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

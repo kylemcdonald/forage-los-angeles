@@ -1,0 +1,18 @@
+Species,RowsInRaw,RowsSourceEdibleTrue,RowsFinalIncluded,SourceEdible,FinalEdible,Reason
+Asian pear (Pyrus pyrifolia),16,0,16,False,True,Edible fruit.
+Brazilian pepper tree (Schinus terebinthefolia),6706,6706,0,True,False,Safety/allergen concerns; excluded for conservative public foraging filter.
+English walnut (Juglans regia),206,0,206,False,True,Edible nuts.
+Java plum (Syzygium cumini),93,0,93,False,True,Edible fruit.
+Korean mulberry (Morus indica),5,0,5,False,True,Edible fruit.
+Pakistan mulberry (Morus macroura),5,0,5,False,True,Edible fruit.
+Surinam cherry (Eugenia uniflora),12,0,12,False,True,Edible fruit.
+blue palo verde (Parkinsonia florida),142,142,0,True,False,Seeds can be eaten but this is uncommon and not easy urban fruit foraging.
+camphor tree (Cinnamomum camphora),17861,17861,0,True,False,Not a safe practical forage species for public fruit harvesting.
+crape myrtle (Lagerstroemia indica),51650,51650,0,True,False,Ornamental species; flowers are technically edible but not a practical forage target.
+northern California black walnut (Juglans hindsii),110,0,110,False,True,Edible nuts.
+paper mulberry (Broussonetia papyrifera),148,0,148,False,True,Edible fruit pulp (limited but forageable).
+red mulberry (Morus rubra),90,0,90,False,True,Edible mulberries; commonly foraged fruit.
+southern California black walnut (Juglans californica),4675,0,4675,False,True,Edible nuts.
+sweet olive (Osmanthus fragrans),14,14,0,True,False,Fragrant ornamental; not a practical fruit-tree forage target.
+sweet viburnum (Viburnum odoratissimum),8,8,0,True,False,Ornamental hedge species; fruit use is uncommon for urban foraging.
+white mulberry (Morus alba),5260,0,5260,False,True,Edible mulberries; commonly foraged fruit.
