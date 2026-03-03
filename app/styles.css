@@ -183,28 +183,6 @@ button:hover {
   color: #455245;
 }
 
-.legend-key {
-  margin-top: 6px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 10px;
-  font-size: 0.74rem;
-}
-
-.chip {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 4px;
-  vertical-align: middle;
-}
-
-.chip.out { background: #e53935; }
-.chip.ripening { background: #fdd835; }
-.chip.ripe { background: #00e676; }
-.chip.overripe { background: #8d6e63; }
-
 main {
   margin-top: 12px;
   display: grid;
