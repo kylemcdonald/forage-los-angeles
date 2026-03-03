@@ -4,7 +4,9 @@ const NOW = new Date();
 const CURRENT_MONTH = NOW.getMonth() + 1;
 
 const state = {
+  mode: 'search',
   speciesQuery: '',
+  browseSpeciesId: '',
   inSeasonOnly: false,
   data: null,
   filteredPoints: [],
@@ -14,6 +16,11 @@ const state = {
 
 const el = {
   speciesInput: document.getElementById('speciesInput'),
+  speciesSelect: document.getElementById('speciesSelect'),
+  searchWrap: document.getElementById('searchWrap'),
+  browseWrap: document.getElementById('browseWrap'),
+  modeSearch: document.getElementById('modeSearch'),
+  modeBrowse: document.getElementById('modeBrowse'),
   suggestions: document.getElementById('suggestions'),
   clearSpecies: document.getElementById('clearSpecies'),
   inSeasonOnly: document.getElementById('inSeasonOnly'),
@@ -64,6 +71,10 @@ function getSpeciesById(id) {
   return state.data.species[id];
 }
 
+function isSpeciesInSeason(species) {
+  return monthInSeason(CURRENT_MONTH, species.seasonStart, species.seasonEnd);
+}
+
 function toGeoJSON(points) {
   return {
     type: 'FeatureCollection',
@@ -88,6 +99,11 @@ function toGeoJSON(points) {
 }
 
 function renderSuggestions() {
+  if (state.mode !== 'search') {
+    el.suggestions.style.display = 'none';
+    return;
+  }
+
   const q = state.speciesQuery.trim().toLowerCase();
   el.suggestions.innerHTML = '';
 
@@ -125,6 +141,55 @@ function renderSuggestions() {
 function renderStats() {
   const shown = state.filteredPoints.length;
   el.stats.textContent = `${shown.toLocaleString()} results`;
+}
+
+function renderModeUI() {
+  const searchMode = state.mode === 'search';
+  el.searchWrap.style.display = searchMode ? 'block' : 'none';
+  el.browseWrap.style.display = searchMode ? 'none' : 'block';
+  el.modeSearch.classList.toggle('active', searchMode);
+  el.modeBrowse.classList.toggle('active', !searchMode);
+  if (!searchMode) {
+    el.suggestions.style.display = 'none';
+  }
+}
+
+function rebuildBrowseOptions() {
+  const previousValue = state.browseSpeciesId;
+  const species = state.data.species
+    .filter((s) => !state.inSeasonOnly || isSpeciesInSeason(s))
+    .sort((a, b) => b.count - a.count);
+
+  el.speciesSelect.innerHTML = '';
+  const allOption = document.createElement('option');
+  allOption.value = '';
+  allOption.textContent = 'All species';
+  el.speciesSelect.appendChild(allOption);
+
+  for (const s of species) {
+    const option = document.createElement('option');
+    option.value = String(s.id);
+    option.textContent = `${s.name} (${s.count.toLocaleString()})`;
+    el.speciesSelect.appendChild(option);
+  }
+
+  const exists = species.some((s) => String(s.id) === previousValue);
+  state.browseSpeciesId = exists ? previousValue : '';
+  el.speciesSelect.value = state.browseSpeciesId;
+}
+
+function setMode(mode) {
+  state.mode = mode;
+  renderModeUI();
+  if (mode === 'search') {
+    state.browseSpeciesId = '';
+    el.speciesSelect.value = '';
+  } else {
+    state.speciesQuery = '';
+    el.speciesInput.value = '';
+    rebuildBrowseOptions();
+  }
+  applyFilters();
 }
 
 function renderMapData() {
@@ -214,13 +279,17 @@ function updateMapGuidance() {
 }
 
 function applyFilters() {
-  const q = state.speciesQuery.trim().toLowerCase();
   let matchingIds = null;
 
-  if (q) {
-    matchingIds = new Set(
-      state.data.species.filter((s) => s.name.toLowerCase().includes(q)).map((s) => s.id)
-    );
+  if (state.mode === 'search') {
+    const q = state.speciesQuery.trim().toLowerCase();
+    if (q) {
+      matchingIds = new Set(
+        state.data.species.filter((s) => s.name.toLowerCase().includes(q)).map((s) => s.id)
+      );
+    }
+  } else if (state.browseSpeciesId !== '') {
+    matchingIds = new Set([Number(state.browseSpeciesId)]);
   }
 
   state.filteredPoints = state.data.points.filter((point) => {
@@ -450,20 +519,36 @@ async function enableSensors() {
 }
 
 function bindEvents() {
+  el.modeSearch.addEventListener('click', () => {
+    setMode('search');
+  });
+
+  el.modeBrowse.addEventListener('click', () => {
+    setMode('browse');
+  });
+
   el.speciesInput.addEventListener('input', (e) => {
     state.speciesQuery = e.target.value;
     renderSuggestions();
     applyFilters();
   });
 
+  el.speciesSelect.addEventListener('change', (e) => {
+    state.browseSpeciesId = e.target.value;
+    applyFilters();
+  });
+
   el.inSeasonOnly.addEventListener('change', (e) => {
     state.inSeasonOnly = e.target.checked;
+    rebuildBrowseOptions();
     applyFilters();
   });
 
   el.clearSpecies.addEventListener('click', () => {
     state.speciesQuery = '';
+    state.browseSpeciesId = '';
     el.speciesInput.value = '';
+    el.speciesSelect.value = '';
     el.suggestions.style.display = 'none';
     applyFilters();
   });
@@ -480,6 +565,8 @@ function bindEvents() {
 async function boot() {
   const response = await fetch(DATA_URL);
   state.data = await response.json();
+  rebuildBrowseOptions();
+  renderModeUI();
   bindEvents();
   initMap();
 }

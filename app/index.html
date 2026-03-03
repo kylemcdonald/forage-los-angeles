@@ -16,10 +16,18 @@
         <h1>LA Forage Trees</h1>
         <p class="sub">Edible tree inventory with live species filtering and seasonality.</p>
 
-        <label for="speciesInput">Species search</label>
-        <div class="autocomplete-wrap">
+        <div class="mode-row">
+          <button id="modeSearch" class="mode-btn active" type="button">Search</button>
+          <button id="modeBrowse" class="mode-btn" type="button">Browse</button>
+        </div>
+
+        <label for="speciesInput">Species</label>
+        <div id="searchWrap" class="autocomplete-wrap">
           <input id="speciesInput" type="text" placeholder="Type species name..." autocomplete="off" />
           <div id="suggestions" class="suggestions"></div>
+        </div>
+        <div id="browseWrap" class="browse-wrap">
+          <select id="speciesSelect"></select>
         </div>
 
         <div class="toggle-row">

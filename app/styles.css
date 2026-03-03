@@ -68,12 +68,30 @@ label {
   position: relative;
 }
 
-input[type="text"] {
+input[type="text"],
+select {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 10px;
   font-size: 1rem;
+  background: #fff;
+  color: var(--ink);
+}
+
+.mode-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mode-btn.active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.browse-wrap {
+  display: none;
 }
 
 .suggestions {
