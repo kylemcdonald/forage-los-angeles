@@ -2,6 +2,7 @@ const PROJECT_BASE = window.location.pathname.replace(/\/(?:app\/)?$/, '/');
 const DATA_URL = `${PROJECT_BASE}data/forage_trees.json`;
 const NOW = new Date();
 const CURRENT_MONTH = NOW.getMonth() + 1;
+const MIN_IN_SEASON_PROBABILITY = 0.2;
 
 const state = {
   mode: 'search',
@@ -60,11 +61,32 @@ function seasonStage(month, start, end) {
   return 'end';
 }
 
-function colorForStage(stage) {
-  if (stage === 'beginning') return '#00c853';
-  if (stage === 'middle') return '#ffd600';
-  if (stage === 'end') return '#ff3d00';
-  return '#40c4ff';
+function getCurrentRipenessProb(species) {
+  if (species.monthProb && species.monthProb.length === 12) {
+    return species.monthProb[CURRENT_MONTH - 1];
+  }
+  return monthInSeason(CURRENT_MONTH, species.seasonStart, species.seasonEnd) ? 0.7 : 0.01;
+}
+
+function getCurrentRipenessStageCode(species) {
+  if (species.monthStage && species.monthStage.length === 12) {
+    return species.monthStage[CURRENT_MONTH - 1];
+  }
+  return monthInSeason(CURRENT_MONTH, species.seasonStart, species.seasonEnd) ? 2 : 0;
+}
+
+function stageLabelFromCode(code) {
+  if (code === 1) return 'ripening';
+  if (code === 2) return 'ripe';
+  if (code === 3) return 'overripe';
+  return 'out';
+}
+
+function colorForStageCode(code) {
+  if (code === 1) return '#fdd835';
+  if (code === 2) return '#00e676';
+  if (code === 3) return '#8d6e63';
+  return '#e53935';
 }
 
 function getSpeciesById(id) {
@@ -72,7 +94,7 @@ function getSpeciesById(id) {
 }
 
 function isSpeciesInSeason(species) {
-  return monthInSeason(CURRENT_MONTH, species.seasonStart, species.seasonEnd);
+  return getCurrentRipenessProb(species) >= MIN_IN_SEASON_PROBABILITY;
 }
 
 function toGeoJSON(points) {
@@ -80,7 +102,9 @@ function toGeoJSON(points) {
     type: 'FeatureCollection',
     features: points.map((p) => {
       const species = getSpeciesById(p[2]);
-      const stage = seasonStage(CURRENT_MONTH, species.seasonStart, species.seasonEnd);
+      const stageCode = getCurrentRipenessStageCode(species);
+      const stageLabel = stageLabelFromCode(stageCode);
+      const probability = getCurrentRipenessProb(species);
       return {
         type: 'Feature',
         geometry: {
@@ -89,8 +113,9 @@ function toGeoJSON(points) {
         },
         properties: {
           species: species.name,
-          stage,
-          color: colorForStage(stage),
+          stageLabel,
+          probability: Number(probability.toFixed(2)),
+          color: colorForStageCode(stageCode),
           radius: 4,
         },
       };
@@ -296,7 +321,7 @@ function applyFilters() {
     const sid = point[2];
     const species = getSpeciesById(sid);
     if (matchingIds && !matchingIds.has(sid)) return false;
-    if (state.inSeasonOnly && !monthInSeason(CURRENT_MONTH, species.seasonStart, species.seasonEnd)) return false;
+    if (state.inSeasonOnly && getCurrentRipenessProb(species) < MIN_IN_SEASON_PROBABILITY) return false;
     return true;
   });
 
@@ -410,7 +435,7 @@ function initMap() {
       const p = f.properties;
       popup
         .setLngLat(e.lngLat)
-        .setHTML(`${p.species}<br/>${p.stage}`)
+        .setHTML(`${p.species}<br/>${p.stageLabel} (${Math.round(Number(p.probability) * 100)}%)`)
         .addTo(map);
     });
 
@@ -467,8 +492,9 @@ function updateCompassTarget() {
   const delta = normalizeDeltaDeg(bearing - heading);
   el.arrow.style.transform = `translate(-50%, -100%) rotate(${delta}deg)`;
 
-  const stage = seasonStage(CURRENT_MONTH, s.seasonStart, s.seasonEnd);
-  el.compassInfo.textContent = `${s.name} | ${Math.round(minDistance)} m away | heading ${Math.round(bearing)}° | season: ${stage}`;
+  const stage = stageLabelFromCode(getCurrentRipenessStageCode(s));
+  const probability = Math.round(getCurrentRipenessProb(s) * 100);
+  el.compassInfo.textContent = `${s.name} | ${Math.round(minDistance)} m away | heading ${Math.round(bearing)}° | ripeness: ${stage} (${probability}%)`;
 }
 
 async function enableSensors() {

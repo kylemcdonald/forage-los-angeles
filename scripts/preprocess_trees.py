@@ -17,6 +17,7 @@ OUT_SPECIES_SUMMARY = ROOT / "data" / "forage_species_summary.csv"
 OUT_AUDIT = ROOT / "data" / "forage_edible_audit.csv"
 OUT_JSON = ROOT / "data" / "forage_trees.json"
 OUT_TOP50_SEASONALITY = ROOT / "data" / "forage_top50_seasonality.csv"
+OUT_MONTHLY_MODEL = ROOT / "data" / "forage_species_monthly_ripeness.csv"
 
 NON_TREE_MARKERS = (
     "vacant site",
@@ -181,9 +182,9 @@ def month_in_season(month: int, start: int, end: int) -> bool:
     return month >= start or month <= end
 
 
-def season_stage(month: int, start: int, end: int) -> str:
+def month_offset_in_window(month: int, start: int, end: int) -> tuple[int, int] | None:
     if not month_in_season(month, start, end):
-        return "out"
+        return None
     span = end - start + 1 if start <= end else (12 - start + 1) + end
     if start <= end:
         offset = month - start
@@ -191,12 +192,66 @@ def season_stage(month: int, start: int, end: int) -> str:
         offset = month - start
     else:
         offset = 12 - start + month
-    pct = 1.0 if span <= 1 else offset / (span - 1)
-    if pct <= 0.33:
-        return "beginning"
-    if pct <= 0.66:
-        return "middle"
-    return "end"
+    return offset, span
+
+
+def cyclic_month_distance(a: int, b: int) -> int:
+    direct = abs(a - b)
+    return min(direct, 12 - direct)
+
+
+def monthly_ripeness_profile(start: int, end: int) -> tuple[list[float], list[int]]:
+    """
+    Returns:
+    - probability per month (index 0 = Jan), values 0.0..1.0
+    - stage code per month: 0 out, 1 ripening, 2 ripe, 3 overripe
+    """
+    probs: list[float] = []
+    stages: list[int] = []
+
+    for month in range(1, 13):
+        inside = month_offset_in_window(month, start, end)
+        if inside is None:
+            edge_distance = min(cyclic_month_distance(month, start), cyclic_month_distance(month, end))
+            if edge_distance == 1:
+                probs.append(0.15)
+            elif edge_distance == 2:
+                probs.append(0.05)
+            else:
+                probs.append(0.01)
+            stages.append(0)
+            continue
+
+        offset, span = inside
+        pct = 1.0 if span <= 1 else offset / max(1, span - 1)
+
+        if span >= 10:
+            # Near year-round species; keep broadly high probability.
+            probs.append(0.75)
+            stages.append(2)
+        elif pct <= 0.25:
+            probs.append(round(0.35 + (0.45 * (pct / 0.25)), 2))
+            stages.append(1)
+        elif pct <= 0.70:
+            center = (pct - 0.25) / 0.45
+            probs.append(round(0.82 + (0.18 * (1 - abs(0.5 - center) * 2)), 2))
+            stages.append(2)
+        else:
+            tail = (pct - 0.70) / 0.30
+            probs.append(round(0.72 - (0.37 * tail), 2))
+            stages.append(3)
+
+    return probs, stages
+
+
+def current_stage_label(stage_code: int) -> str:
+    if stage_code == 1:
+        return "ripening"
+    if stage_code == 2:
+        return "ripe"
+    if stage_code == 3:
+        return "overripe"
+    return "out"
 
 
 def main() -> None:
@@ -334,10 +389,30 @@ def main() -> None:
     now_month = datetime.now().month
     with OUT_TOP50_SEASONALITY.open("w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["Rank", "Species", "Count", "SeasonStartMonth", "SeasonEndMonth", "CurrentMonth", "CurrentStage"])
+        writer.writerow(
+            [
+                "Rank",
+                "Species",
+                "Count",
+                "SeasonStartMonth",
+                "SeasonEndMonth",
+                "CurrentMonth",
+                "CurrentRipenessStage",
+                "CurrentRipenessProbability",
+            ]
+        )
         for i, (species, count) in enumerate(species_final_edible.most_common(50), start=1):
             start, end = season_for_species(species)
-            writer.writerow([i, species, count, start, end, now_month, season_stage(now_month, start, end)])
+            probs, stages = monthly_ripeness_profile(start, end)
+            writer.writerow([i, species, count, start, end, now_month, current_stage_label(stages[now_month - 1]), probs[now_month - 1]])
+
+    with OUT_MONTHLY_MODEL.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Species", "SeasonStartMonth", "SeasonEndMonth"] + [f"Month{m:02d}Prob" for m in range(1, 13)])
+        for species, _ in species_final_edible.most_common():
+            start, end = season_for_species(species)
+            probs, _ = monthly_ripeness_profile(start, end)
+            writer.writerow([species, start, end] + probs)
 
     # frontend JSON payload (compact)
     species_sorted = [name for name, _ in species_final_edible.most_common()]
@@ -346,6 +421,7 @@ def main() -> None:
     species_payload = []
     for name in species_sorted:
         start, end = season_for_species(name)
+        probs, stages = monthly_ripeness_profile(start, end)
         species_payload.append(
             {
                 "id": species_index[name],
@@ -353,6 +429,8 @@ def main() -> None:
                 "count": species_final_edible[name],
                 "seasonStart": start,
                 "seasonEnd": end,
+                "monthProb": probs,
+                "monthStage": stages,
             }
         )
 
@@ -382,6 +460,7 @@ def main() -> None:
     print(f"Wrote: {OUT_SPECIES_SUMMARY}")
     print(f"Wrote: {OUT_AUDIT}")
     print(f"Wrote: {OUT_TOP50_SEASONALITY}")
+    print(f"Wrote: {OUT_MONTHLY_MODEL}")
     print(f"Wrote: {OUT_JSON}")
 
 

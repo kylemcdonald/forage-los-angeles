@@ -154,6 +154,57 @@ button:hover {
   font-weight: 600;
 }
 
+.legend {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #ffffffcc;
+}
+
+.legend-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.legend-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e53935 0%, #fdd835 33%, #00e676 66%, #8d6e63 100%);
+  border: 1px solid #cfd7cf;
+}
+
+.legend-labels {
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #455245;
+}
+
+.legend-key {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  font-size: 0.74rem;
+}
+
+.chip {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.chip.out { background: #e53935; }
+.chip.ripening { background: #fdd835; }
+.chip.ripe { background: #00e676; }
+.chip.overripe { background: #8d6e63; }
+
 main {
   margin-top: 12px;
   display: grid;
